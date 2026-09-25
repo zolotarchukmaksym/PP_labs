@@ -1,0 +1,9 @@
+git config --global user.name "Max"
+
+git config --global user.email "max@gmail.com"
+git config --global push.default matching
+git config --global alias.co checkout
+git init
+git add .
+
+git commit -am "first com"

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="section-title">Review for {{ event.name }}</h1>
+
+        <form method="POST" action="{% url 'add_review' event.id %}" class="review-form">
+            {% csrf_token %}
+
+            <!-- Поле для відгуку -->
+            <div class="form-group">
+                <label for="review-text">Write your review:</label>
+                {{ form.text|add_class:"form-control" }}
+            </div>
+
+            <!-- Кнопка для відправлення -->
+            <div class="form-group">
+                <button type="submit" class="btn submit-btn">Submit Review</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

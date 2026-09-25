@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container profile-container">
+        <h2 class="section-title">Profile</h2>
+
+        <div class="registrations-section">
+            <h3 class="section-subtitle">Your Registrations:</h3>
+            {% if registrations %}
+                <ul class="registration-list">
+                    {% for registration in registrations %}
+                        <li class="registration-item">
+                            <strong>{{ registration.event.name }}</strong>
+                            <span>Registered on: {{ registration.registration_date|date:"F j, Y" }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-registrations">You have not registered for any events.</p>
+            {% endif %}
+        </div>
+
+        <div class="reviews-section">
+            <h3 class="section-subtitle">Your Reviews:</h3>
+            {% if reviews %}
+                <ul class="review-list">
+                    {% for review in reviews %}
+                        <li class="review-item">
+                            <strong>{{ review.event.name }}</strong>:
+                            <p class="review-text">{{ review.text }}</p>
+                            <p><strong>Rating:</strong> {{ review.rating }} / 5</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-reviews">You have not left any reviews.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

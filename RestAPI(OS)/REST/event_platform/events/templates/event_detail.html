@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ event.name }} - Event Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="event-title">{{ event.name }}</h1>
+    <p class="event-description">{{ event.description }}</p>
+    <p><strong>Start Date:</strong> {{ event.start_date|date:"F j, Y" }}</p>
+    <p><strong>End Date:</strong> {{ event.end_date|date:"F j, Y" }}</p>
+
+    {% if user.is_authenticated %}
+        {% if registration %}
+            <p class="registration-status">You are registered for this event.</p>
+            <div class="button-container">
+                <a href="{% url 'cancel_registration' registration.id %}" class="btn cancel-btn">Cancel Registration</a>
+            </div>
+        {% else %}
+            <form method="POST" action="{% url 'register_for_event' event.id %}" class="registration-form">
+                {% csrf_token %}
+                <label for="ticket" class="ticket-label">Select a ticket:</label>
+                <select name="ticket_id" id="ticket" class="ticket-select">
+                    {% for ticket in tickets %}
+                        <option value="{{ ticket.id }}">{{ ticket.name }} - ${{ ticket.price }}</option>
+                    {% endfor %}
+                </select>
+                <div class="button-container">
+                    <button type="submit" class="btn submit-btn">Register</button>
+                </div>
+            </form>
+        {% endif %}
+    {% else %}
+        <p class="login-required">You need to be logged in to register for this event.</p>
+    {% endif %}
+
+    <h2 class="section-title">Reviews</h2>
+    <ul class="reviews-list">
+        {% for review in reviews %}
+            <li class="review-item">
+                <strong>{{ review.user.username }}:</strong>
+                <p>{{ review.text }}</p>
+                <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                <p><small>Posted on {{ review.created_at|date:"F j, Y, g:i a" }}</small></p>
+            </li>
+        {% empty %}
+            <p>No reviews yet.</p>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <h3 class="section-title">Add Review</h3>
+        <form method="POST" action="{% url 'add_review' event.id %}" class="review-form">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <div class="button-container">
+                <button type="submit" class="btn submit-btn">Submit Review</button>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

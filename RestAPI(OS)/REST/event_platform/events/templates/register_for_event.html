@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Register for Event{% endblock %}
+
+{% block content %}
+  <h2 class="section-title">Register for {{ event.name }}</h2>
+
+  {% if tickets %}
+    <form method="post" class="registration-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn submit-btn">Register</button>
+    </form>
+  {% else %}
+    <p class="no-tickets-message">Sorry, there are no tickets available for this event.</p>
+  {% endif %}
+
+  <h3 class="available-tickets-title">Available Tickets:</h3>
+  <ul class="ticket-list">
+    {% for ticket in tickets %}
+      <li class="ticket-item">
+        <span class="ticket-price">{{ ticket.price }} USD</span> -
+        <span class="ticket-quantity">Available: {{ ticket.quantity_available }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if messages %}
+    <div class="messages-container">
+      {% for message in messages %}
+        <p class="message {{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}
