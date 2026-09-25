@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bokeh Dashboard</title>
+    <script src="{{ cdn_js }}"></script>
+</head>
+<body>
+    <h1>Bokeh Dashboard</h1>
+    {% for script, div in scripts|zip:divs %}
+        <div>
+            {{ script|safe }}
+            {{ div|safe }}
+        </div>
+    {% endfor %}
+</body>
+</html>
