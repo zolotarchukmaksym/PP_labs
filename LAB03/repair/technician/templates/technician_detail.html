@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Technician Detail</title>
+    <link rel="stylesheet" href="/static/technician_styles.css">
+    <script src="/static/technician_scripts.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Technician Detail</h1>
+        <p><strong>Name:</strong> {{ technician.name }}</p>
+        <p><strong>Email:</strong> {{ technician.email }}</p>
+        <p><strong>Phone:</strong> {{ technician.phone }}</p>
+        <a href="{% url 'technician_list' %}" class="btn btn-secondary">Back to Technician List</a>
+        <a href="{% url 'technician_edit' technician.id %}" class="btn btn-primary">Edit</a>
+    </div>
+</body>
+</html>
